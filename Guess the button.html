@@ -11,31 +11,48 @@
     <style type="text/css">
       h2 {text-align: center;}
     </style>
+    
   </head>
   <body>
     <div class="container">
       <h2>Guess the button</h2>
-      <div class="d-grid gap-2 col-6 mx-auto">
-        <button type="button" class="btn btn-secondary" onclick="startGame();" id="start">Start game</button>
-        <button type="button" class="btn btn-primary" onclick="guess(this.id)" id="1">Button 1</button>
-        <button type="button" class="btn btn-primary" onclick="guess(this.id)" id="2">Button 2</button>
-        <button type="button" class="btn btn-primary" onclick="guess(this.id)" id="3">Button 3</button>
+      <div class="d-grid gap-2 col-6 mx-auto" id="buttons">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Choose the number of buttons</label>
+                <input type="text" class="form-control" id="in">
+              </div>
+              <button type="button" class="btn btn-secondary" onclick="startGame($('#in').val());" id="start">Start game</button>  
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-
     <script type="text/javascript">
-      var randomNr, check = 0;//"check" verify if the game is started
-      function startGame() {
-        randomNr = Math.floor(Math.random() * 3 + 1);
-        check = 1;
+      var randomNr, check = 0, nrButton = 1;//"check" verify if the game is started
+      function startGame(n) {
+          var nrId = 1;
+          for (var i = 1; i <= n; ++i) {
+            if (check == 0) {
+              $('#buttons').append($('<button type="button" class="btn btn-primary" onclick="guess(this.id)" id="temp">Button</button>'));
+            }
+            var div = document.getElementById("temp");
+            div.setAttribute("id", nrId);
+            document.getElementById(nrId).innerHTML = "Button " + nrId;
+            ++nrId;
+          }
+          randomNr = Math.floor(Math.random() * n + 1);
+          check = 1;       
       }
 
       function guess(btnId) {
         if (btnId == randomNr && check == 1) {
           alert("Winner!! :)");
           check = 0;
-          document.getElementById("start").innerHTML = "Play again";
-        } else if(check == 1){
+          location.reload();
+        } else if (check == 1) {
           alert("Try again! :(");
         }
       }
