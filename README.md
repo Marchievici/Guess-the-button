@@ -1,2 +1,2 @@
 # Guess-the-button
-There are three buttons, one of them is the correct answer, you have to guess the right button to win.
+In this game you have to introduce a number which represent the number of buttons between you have to choose after that to see which one is the correct answer.
